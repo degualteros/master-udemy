@@ -1,6 +1,8 @@
 'use strict'
 var validator = require("validator");
 var Article = require("../models/article");
+var fs = require("fs");
+
 
 
 var controller = {  
@@ -211,7 +213,53 @@ var controller = {
       });
 
     });
-  } //end delete
+  }, //end delete
+
+  upload: (req, res) => {
+    // Configurar module connect multiparty router/article.js (hecho)
+
+    //recoger fichero de la peticion
+    var file_name = "Imagen no subida...";
+
+    if (!req.files) {
+      return res.status(200).send({
+        status: "error",
+        message: file_name
+      });
+      
+    }
+    //conseguir nombre y extension
+    var file_path = req.files.file0.path;
+    var file_split = file_path.split("\\");
+    // ADVERTENCIA: Si es linux se debe hacer split con /
+    
+    //Nombre del archivo
+    var file_name = file_split[2];
+
+    //Extension del archivo
+    var extension_split = file_name.split("\.");
+    var file_ext = extension_split[1];
+    
+    //comprobar la extension (solo imagenes) sino es valida borrar
+    if(file_ext != "png" && file_ext != "jpg" && file_ext != "jpeg" && file_ext != "gif"){
+      
+      // borrar el archivo subido (libreria filesistem FS y path)
+      
+
+    }else{
+          //Si todo es valido
+
+          //Buscar el articulo, nombrarlo y actualizarlo
+
+    }
+
+
+    return res.status(200).send({
+      fichero: req.files,
+      split: file_split,
+      file_ext
+    });
+  }
 
 }; //end controller
 
